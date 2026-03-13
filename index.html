@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="it">
 <head>
@@ -6,63 +5,273 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>AssicuraFacile</title>
   <style>
-    body {
+    * {
+      box-sizing: border-box;
       font-family: Arial, sans-serif;
-      background: #f5f5f5;
-      text-align: center;
-      padding: 100px 20px;
+    }
+
+    body {
       margin: 0;
+      background: #f3f3f3;
+      color: #222;
+    }
+
+    .wrap {
+      max-width: 1100px;
+      margin: 40px auto;
+      padding: 20px;
+    }
+
+    .hero {
+      background: #fff;
+      border-radius: 18px;
+      padding: 50px 25px;
+      text-align: center;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.08);
     }
 
     h1 {
-      color: #2ecc71;
-      font-size: 42px;
-      margin-bottom: 10px;
+      margin: 0 0 12px;
+      font-size: 58px;
+      color: #31c86b;
     }
 
-    p {
-      font-size: 20px;
+    .subtitle {
+      font-size: 18px;
       color: #333;
       margin-bottom: 30px;
     }
 
+    .search-row {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
     input {
-      padding: 12px;
+      width: 300px;
+      max-width: 100%;
+      padding: 16px;
       font-size: 18px;
-      border-radius: 8px;
       border: 1px solid #ccc;
-      width: 260px;
-      max-width: 90%;
+      border-radius: 12px;
+      outline: none;
     }
 
     button {
-      background: #ff7a00;
+      background: #ff8500;
       color: white;
       border: none;
-      padding: 14px 28px;
+      padding: 16px 30px;
       font-size: 18px;
-      border-radius: 8px;
+      border-radius: 12px;
       cursor: pointer;
-      margin-left: 10px;
+      font-weight: bold;
     }
 
-    .wrap {
-      max-width: 700px;
-      margin: 0 auto;
-      background: white;
-      padding: 40px 20px;
-      border-radius: 14px;
-      box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+    button:hover {
+      opacity: 0.95;
+    }
+
+    .message {
+      margin-top: 18px;
+      font-size: 16px;
+      color: #d35400;
+      font-weight: bold;
+    }
+
+    .results {
+      display: none;
+      margin-top: 30px;
+    }
+
+    .card {
+      background: #fff;
+      border-radius: 16px;
+      padding: 22px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+      margin-bottom: 20px;
+    }
+
+    .card h2 {
+      margin-top: 0;
+      font-size: 26px;
+    }
+
+    .vehicle-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 14px;
+      margin-top: 18px;
+    }
+
+    .vehicle-item {
+      background: #fafafa;
+      border: 1px solid #eee;
+      border-radius: 12px;
+      padding: 14px;
+    }
+
+    .vehicle-item strong {
+      display: block;
+      font-size: 13px;
+      color: #666;
+      margin-bottom: 6px;
+    }
+
+    .quotes {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 18px;
+      margin-top: 18px;
+    }
+
+    .quote {
+      background: #fff;
+      border-radius: 16px;
+      padding: 20px;
+      border-top: 5px solid #31c86b;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+    }
+
+    .quote h3 {
+      margin-top: 0;
+      margin-bottom: 10px;
+    }
+
+    .price {
+      font-size: 34px;
+      color: #ff8500;
+      font-weight: bold;
+      margin-bottom: 6px;
+    }
+
+    .month {
+      color: #666;
+      margin-bottom: 14px;
+    }
+
+    .quote ul {
+      padding-left: 18px;
+      margin-bottom: 18px;
+      color: #333;
+    }
+
+    .quote li {
+      margin-bottom: 8px;
+    }
+
+    .mini-btn {
+      width: 100%;
+    }
+
+    @media (max-width: 640px) {
+      h1 {
+        font-size: 42px;
+      }
+
+      .hero {
+        padding: 35px 18px;
+      }
+
+      input, button {
+        width: 100%;
+      }
     }
   </style>
 </head>
 <body>
   <div class="wrap">
-    <h1>AssicuraFacile</h1>
-    <p>Controlla la targa e confronta assicurazioni in pochi secondi.</p>
+    <div class="hero">
+      <h1>AssicuraFacile</h1>
+      <div class="subtitle">Controlla la targa e confronta assicurazioni in pochi secondi.</div>
 
-    <input type="text" placeholder="Inserisci targa" />
-    <button>Confronta</button>
+      <div class="search-row">
+        <input id="plateInput" type="text" placeholder="Es. AB123CD" />
+        <button onclick="searchPlate()">Confronta</button>
+      </div>
+
+      <div id="message" class="message"></div>
+    </div>
+
+    <div id="results" class="results">
+      <div class="card">
+        <h2>Dati del veicolo</h2>
+        <div class="vehicle-grid">
+          <div class="vehicle-item"><strong>Targa</strong><span id="plateOut">-</span></div>
+          <div class="vehicle-item"><strong>Marca</strong><span>Fiat</span></div>
+          <div class="vehicle-item"><strong>Modello</strong><span>Panda</span></div>
+          <div class="vehicle-item"><strong>Anno</strong><span>2021</span></div>
+          <div class="vehicle-item"><strong>Alimentazione</strong><span>Benzina</span></div>
+          <div class="vehicle-item"><strong>Classe ambientale</strong><span>Euro 6</span></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Confronto assicurazioni</h2>
+        <div class="quotes">
+          <div class="quote">
+            <h3>Prima Assicurazioni</h3>
+            <div class="price">€389</div>
+            <div class="month">da €32,41 / mese</div>
+            <ul>
+              <li>RCA inclusa</li>
+              <li>Assistenza stradale</li>
+              <li>Tutela legale</li>
+            </ul>
+            <button class="mini-btn">Vedi preventivo</button>
+          </div>
+
+          <div class="quote">
+            <h3>ConTe.it</h3>
+            <div class="price">€442</div>
+            <div class="month">da €36,83 / mese</div>
+            <ul>
+              <li>RCA inclusa</li>
+              <li>Furto e incendio</li>
+              <li>Cristalli</li>
+            </ul>
+            <button class="mini-btn">Vedi preventivo</button>
+          </div>
+
+          <div class="quote">
+            <h3>Genertel</h3>
+            <div class="price">€498</div>
+            <div class="month">da €41,50 / mese</div>
+            <ul>
+              <li>RCA inclusa</li>
+              <li>Eventi naturali</li>
+              <li>Auto sostitutiva</li>
+            </ul>
+            <button class="mini-btn">Vedi preventivo</button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
+
+  <script>
+    function searchPlate() {
+      const input = document.getElementById("plateInput");
+      const message = document.getElementById("message");
+      const results = document.getElementById("results");
+      const plateOut = document.getElementById("plateOut");
+
+      let plate = input.value.trim().toUpperCase();
+
+      if (!plate) {
+        message.textContent = "Inserisci una targa per continuare.";
+        results.style.display = "none";
+        return;
+      }
+
+      message.textContent = "Ricerca completata con successo.";
+      plateOut.textContent = plate;
+      results.style.display = "block";
+
+      results.scrollIntoView({ behavior: "smooth" });
+    }
+  </script>
 </body>
 </html>
