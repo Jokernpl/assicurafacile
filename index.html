@@ -1,150 +1,494 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-<meta charset="UTF-8">
-<title>AssicuraFacile</title>
-
-<style>
-
-body{
-font-family:Arial;
-background:#f4f4f4;
-text-align:center;
-margin:0;
-padding:0;
-}
-
-.box{
-margin-top:100px;
-background:white;
-padding:40px;
-border-radius:15px;
-width:600px;
-margin-left:auto;
-margin-right:auto;
-box-shadow:0 10px 30px rgba(0,0,0,0.1);
-}
-
-h1{
-color:#2ecc71;
-font-size:50px;
-}
-
-input{
-padding:15px;
-font-size:18px;
-width:250px;
-border-radius:10px;
-border:1px solid #ccc;
-}
-
-button{
-padding:15px 25px;
-font-size:18px;
-border:none;
-border-radius:10px;
-background:#ff7a00;
-color:white;
-cursor:pointer;
-}
-
-button:hover{
-opacity:0.9;
-}
-
-.results{
-display:none;
-margin-top:40px;
-}
-
-.card{
-background:white;
-padding:20px;
-margin:20px auto;
-width:500px;
-border-radius:12px;
-box-shadow:0 5px 20px rgba(0,0,0,0.1);
-}
-
-.price{
-font-size:30px;
-color:#ff7a00;
-font-weight:bold;
-}
-
-.pay{
-background:#2ecc71;
-margin-top:10px;
-}
-
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AssicuraFacile</title>
+  <style>
+    * { box-sizing: border-box; font-family: Arial, sans-serif; }
+    body {
+      margin: 0;
+      background: #f4f6f8;
+      color: #1f2937;
+    }
+    .container {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+    .hero {
+      background: linear-gradient(135deg, #2ecb70, #1fb35f);
+      color: white;
+      border-radius: 24px;
+      padding: 48px 24px;
+      margin-top: 24px;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+      text-align: center;
+    }
+    .hero h1 {
+      margin: 0 0 12px;
+      font-size: 56px;
+    }
+    .hero p {
+      margin: 0 0 24px;
+      font-size: 20px;
+    }
+    .search-row {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    input, select {
+      padding: 15px 16px;
+      border-radius: 12px;
+      border: 1px solid #d1d5db;
+      font-size: 16px;
+      width: 100%;
+      outline: none;
+    }
+    .plate-input {
+      max-width: 320px;
+    }
+    .btn {
+      background: #ff8500;
+      color: white;
+      border: none;
+      border-radius: 12px;
+      padding: 15px 24px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .btn:hover { opacity: 0.95; }
+    .btn-secondary {
+      background: #e5e7eb;
+      color: #111827;
+    }
+    .status {
+      margin-top: 16px;
+      min-height: 24px;
+      font-weight: bold;
+    }
+    .section {
+      display: none;
+      margin-top: 24px;
+    }
+    .card {
+      background: white;
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.06);
+      margin-bottom: 20px;
+    }
+    .card h2 {
+      margin: 0 0 18px;
+      font-size: 28px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 14px;
+    }
+    .field {
+      background: #fafafa;
+      border: 1px solid #eee;
+      border-radius: 14px;
+      padding: 14px;
+    }
+    .field strong {
+      display: block;
+      color: #6b7280;
+      font-size: 13px;
+      margin-bottom: 6px;
+    }
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+    }
+    .toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+    }
+    .quotes {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+      gap: 18px;
+    }
+    .quote {
+      background: white;
+      border-radius: 18px;
+      padding: 22px;
+      border-top: 6px solid #2ecb70;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.06);
+    }
+    .badge {
+      display: inline-block;
+      background: #eefcf3;
+      color: #17894a;
+      border: 1px solid #bdeccf;
+      border-radius: 999px;
+      padding: 6px 10px;
+      font-size: 12px;
+      font-weight: bold;
+      margin-bottom: 12px;
+    }
+    .quote h3 {
+      margin: 0 0 10px;
+      font-size: 24px;
+    }
+    .price {
+      font-size: 38px;
+      color: #ff8500;
+      font-weight: bold;
+      margin-bottom: 4px;
+    }
+    .muted {
+      color: #6b7280;
+    }
+    ul.features {
+      padding-left: 18px;
+      margin: 16px 0 18px;
+    }
+    ul.features li {
+      margin-bottom: 8px;
+    }
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      border-bottom: 1px solid #eee;
+      padding: 12px 0;
+    }
+    .summary-row:last-child {
+      border-bottom: none;
+    }
+    .payment-box, .success-box {
+      display: none;
+    }
+    .success {
+      background: #eefcf3;
+      color: #166534;
+      border: 1px solid #bdeccf;
+      border-radius: 14px;
+      padding: 16px;
+      font-weight: bold;
+      margin-top: 16px;
+    }
+    .small {
+      font-size: 14px;
+      color: #6b7280;
+    }
+    @media (max-width: 640px) {
+      .hero h1 { font-size: 42px; }
+      .hero p { font-size: 17px; }
+      .btn, .plate-input { width: 100%; max-width: 100%; }
+    }
+  </style>
 </head>
-
 <body>
+  <div class="container">
+    <div class="hero">
+      <h1>AssicuraFacile</h1>
+      <p>Controlla la targa, confronta i preventivi e completa la richiesta online.</p>
 
-<div class="box">
+      <div class="search-row">
+        <input id="plateInput" class="plate-input" type="text" placeholder="Es. AB123CD" />
+        <button class="btn" onclick="startLookup()">Confronta ora</button>
+      </div>
 
-<h1>AssicuraFacile</h1>
+      <div id="status" class="status"></div>
+    </div>
 
-<p>Controlla la targa e confronta assicurazioni</p>
+    <div id="vehicleSection" class="section">
+      <div class="card">
+        <h2>Dati veicolo</h2>
+        <div class="grid">
+          <div class="field"><strong>Targa</strong><span id="vPlate">-</span></div>
+          <div class="field"><strong>Marca</strong><span id="vBrand">-</span></div>
+          <div class="field"><strong>Modello</strong><span id="vModel">-</span></div>
+          <div class="field"><strong>Anno</strong><span id="vYear">-</span></div>
+          <div class="field"><strong>Alimentazione</strong><span id="vFuel">-</span></div>
+          <div class="field"><strong>Cilindrata</strong><span id="vCc">-</span></div>
+          <div class="field"><strong>Classe ambientale</strong><span id="vEuro">-</span></div>
+          <div class="field"><strong>Uso</strong><span id="vUse">Privato</span></div>
+        </div>
+      </div>
+    </div>
 
-<input id="plate" placeholder="Inserisci targa">
-<button onclick="search()">Confronta</button>
+    <div id="driverSection" class="section">
+      <div class="card">
+        <h2>Dati conducente</h2>
+        <div class="form-grid">
+          <input id="birthDate" type="date" />
+          <input id="cap" type="text" placeholder="CAP di residenza" />
+          <select id="meritClass">
+            <option value="">Classe di merito</option>
+            <option>1</option><option>2</option><option>3</option><option>4</option>
+            <option>5</option><option>6</option><option>7</option><option>8</option>
+            <option>9</option><option>10</option><option>11</option><option>12</option>
+            <option>13</option><option>14</option>
+          </select>
+          <select id="claims">
+            <option value="">Sinistri ultimi 5 anni</option>
+            <option>Nessuno</option>
+            <option>1 sinistro</option>
+            <option>2 o più sinistri</option>
+          </select>
+        </div>
 
-<div id="vehicle"></div>
+        <div style="margin-top:16px;">
+          <button class="btn" onclick="calculateQuotes()">Calcola preventivi</button>
+        </div>
+      </div>
+    </div>
 
-</div>
+    <div id="quotesSection" class="section">
+      <div class="card">
+        <div class="toolbar">
+          <h2 style="margin:0;">Preventivi disponibili</h2>
+          <select id="sortQuotes" style="max-width:240px;" onchange="renderQuotes()">
+            <option value="cheap">Più economiche</option>
+            <option value="rated">Miglior valutazione</option>
+            <option value="complete">Più complete</option>
+          </select>
+        </div>
 
-<div id="results" class="results">
+        <div id="quotesWrap" class="quotes"></div>
+      </div>
+    </div>
 
-<div class="card">
-<h2>Prima Assicurazioni</h2>
-<div class="price">€389</div>
-<p>RCA + assistenza stradale</p>
-<button class="pay" onclick="pay()">Paga ora</button>
-</div>
+    <div id="summarySection" class="section">
+      <div class="card">
+        <h2>Riepilogo preventivo</h2>
+        <div class="summary-row"><span>Compagnia</span><strong id="sCompany">-</strong></div>
+        <div class="summary-row"><span>Targa</span><strong id="sPlate">-</strong></div>
+        <div class="summary-row"><span>Veicolo</span><strong id="sVehicle">-</strong></div>
+        <div class="summary-row"><span>Premio annuale</span><strong id="sPrice">-</strong></div>
+        <div class="summary-row"><span>Rata mensile</span><strong id="sMonth">-</strong></div>
 
-<div class="card">
-<h2>Genertel</h2>
-<div class="price">€420</div>
-<p>RCA + furto incendio</p>
-<button class="pay" onclick="pay()">Paga ora</button>
-</div>
+        <div style="margin-top:18px; display:flex; gap:12px; flex-wrap:wrap;">
+          <button class="btn" onclick="openPayment()">Paga ora</button>
+          <button class="btn btn-secondary" onclick="closeSummary()">Chiudi</button>
+        </div>
+      </div>
+    </div>
 
-<div class="card">
-<h2>ConTe.it</h2>
-<div class="price">€460</div>
-<p>RCA completa</p>
-<button class="pay" onclick="pay()">Paga ora</button>
-</div>
+    <div id="paymentSection" class="section payment-box">
+      <div class="card">
+        <h2>Pagamento demo</h2>
+        <p class="small">Questa è una simulazione grafica. Non è un pagamento reale.</p>
 
-</div>
+        <div class="summary-row"><span>Compagnia</span><strong id="pCompany">-</strong></div>
+        <div class="summary-row"><span>Targa</span><strong id="pPlate">-</strong></div>
+        <div class="summary-row"><span>Importo</span><strong id="pAmount">-</strong></div>
 
-<script>
+        <div class="form-grid" style="margin-top:18px;">
+          <input id="fullName" type="text" placeholder="Nome e cognome" />
+          <input id="email" type="email" placeholder="Email" />
+          <input id="card" type="text" placeholder="Numero carta" />
+          <input id="expiry" type="text" placeholder="Scadenza MM/AA" />
+        </div>
 
-function search(){
+        <div style="margin-top:18px;">
+          <button class="btn" onclick="completePayment()">Conferma pagamento</button>
+        </div>
 
-let plate=document.getElementById("plate").value;
+        <div id="successBox" class="success-box">
+          <div class="success">
+            Pagamento demo completato con successo. Ti abbiamo inviato una conferma simulata via email.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
-if(plate==""){
-alert("Inserisci la targa");
-return;
-}
+  <script>
+    const fakeVehicles = {
+      "AB123CD": { brand: "Fiat", model: "Panda", year: "2021", fuel: "Benzina", cc: "1242 cc", euro: "Euro 6" },
+      "EB453HI": { brand: "Volkswagen", model: "Golf", year: "2020", fuel: "Diesel", cc: "1600 cc", euro: "Euro 6" },
+      "ZA909TT": { brand: "Peugeot", model: "208", year: "2022", fuel: "Benzina", cc: "1200 cc", euro: "Euro 6" }
+    };
 
-document.getElementById("vehicle").innerHTML=
-"<h3>Veicolo trovato</h3> Fiat Panda 2021<br>Targa: "+plate.toUpperCase();
+    let selectedVehicle = null;
+    let selectedQuote = null;
+    let quotesData = [];
 
-document.getElementById("results").style.display="block";
+    function normalizePlate(value) {
+      return value.replace(/\s+/g, "").toUpperCase();
+    }
 
-}
+    function hideSections() {
+      document.getElementById("vehicleSection").style.display = "none";
+      document.getElementById("driverSection").style.display = "none";
+      document.getElementById("quotesSection").style.display = "none";
+      document.getElementById("summarySection").style.display = "none";
+      document.getElementById("paymentSection").style.display = "none";
+      document.getElementById("successBox").style.display = "none";
+    }
 
-function pay(){
+    function startLookup() {
+      const plate = normalizePlate(document.getElementById("plateInput").value);
+      const status = document.getElementById("status");
 
-window.location.href="https://buy.stripe.com/test";
+      hideSections();
 
-}
+      if (!plate) {
+        status.textContent = "Inserisci una targa per continuare.";
+        return;
+      }
 
-</script>
+      status.textContent = "Ricerca targa in corso...";
 
+      setTimeout(() => {
+        if (!fakeVehicles[plate]) {
+          status.textContent = "Targa non trovata. Prova con AB123CD, EB453HI o ZA909TT.";
+          return;
+        }
+
+        selectedVehicle = { plate, ...fakeVehicles[plate] };
+
+        document.getElementById("vPlate").textContent = selectedVehicle.plate;
+        document.getElementById("vBrand").textContent = selectedVehicle.brand;
+        document.getElementById("vModel").textContent = selectedVehicle.model;
+        document.getElementById("vYear").textContent = selectedVehicle.year;
+        document.getElementById("vFuel").textContent = selectedVehicle.fuel;
+        document.getElementById("vCc").textContent = selectedVehicle.cc;
+        document.getElementById("vEuro").textContent = selectedVehicle.euro;
+
+        status.textContent = "Veicolo trovato. Completa i dati del conducente.";
+        document.getElementById("vehicleSection").style.display = "block";
+        document.getElementById("driverSection").style.display = "block";
+        document.getElementById("driverSection").scrollIntoView({ behavior: "smooth" });
+      }, 1200);
+    }
+
+    function calculateQuotes() {
+      const birthDate = document.getElementById("birthDate").value;
+      const cap = document.getElementById("cap").value.trim();
+      const meritClass = document.getElementById("meritClass").value;
+      const claims = document.getElementById("claims").value;
+
+      if (!selectedVehicle) {
+        alert("Cerca prima una targa.");
+        return;
+      }
+
+      if (!birthDate || !cap || !meritClass || !claims) {
+        alert("Compila tutti i dati del conducente.");
+        return;
+      }
+
+      let extra = 0;
+      if (claims === "1 sinistro") extra += 45;
+      if (claims === "2 o più sinistri") extra += 90;
+      if (parseInt(meritClass, 10) > 4) extra += 35;
+
+      quotesData = [
+        {
+          company: "Prima Assicurazioni",
+          badge: "Più conveniente",
+          annual: 389 + extra,
+          month: ((389 + extra) / 12).toFixed(2),
+          rating: 4.7,
+          coverages: ["RCA inclusa", "Assistenza stradale", "Tutela legale"],
+          type: "cheap"
+        },
+        {
+          company: "ConTe.it",
+          badge: "Scelta smart",
+          annual: 442 + extra,
+          month: ((442 + extra) / 12).toFixed(2),
+          rating: 4.5,
+          coverages: ["RCA inclusa", "Furto e incendio", "Cristalli"],
+          type: "rated"
+        },
+        {
+          company: "Genertel",
+          badge: "Più completa",
+          annual: 498 + extra,
+          month: ((498 + extra) / 12).toFixed(2),
+          rating: 4.8,
+          coverages: ["RCA inclusa", "Eventi naturali", "Auto sostitutiva"],
+          type: "complete"
+        }
+      ];
+
+      renderQuotes();
+      document.getElementById("quotesSection").style.display = "block";
+      document.getElementById("quotesSection").scrollIntoView({ behavior: "smooth" });
+    }
+
+    function renderQuotes() {
+      const sort = document.getElementById("sortQuotes").value;
+      const wrap = document.getElementById("quotesWrap");
+      let data = [...quotesData];
+
+      if (sort === "cheap") data.sort((a, b) => a.annual - b.annual);
+      if (sort === "rated") data.sort((a, b) => b.rating - a.rating);
+      if (sort === "complete") data.sort((a, b) => b.coverages.length - a.coverages.length);
+
+      wrap.innerHTML = data.map(q => `
+        <div class="quote">
+          <div class="badge">${q.badge}</div>
+          <h3>${q.company}</h3>
+          <div class="price">€${q.annual}</div>
+          <div class="muted">da €${q.month} / mese · rating ${q.rating}/5</div>
+          <ul class="features">
+            ${q.coverages.map(c => `<li>${c}</li>`).join("")}
+          </ul>
+          <button class="btn" onclick='selectQuote(${JSON.stringify(JSON.stringify(q))})'>Seleziona</button>
+        </div>
+      `).join("");
+    }
+
+    function selectQuote(q) {
+      selectedQuote = JSON.parse(q);
+
+      document.getElementById("sCompany").textContent = selectedQuote.company;
+      document.getElementById("sPlate").textContent = selectedVehicle.plate;
+      document.getElementById("sVehicle").textContent = `${selectedVehicle.brand} ${selectedVehicle.model} ${selectedVehicle.year}`;
+      document.getElementById("sPrice").textContent = `€${selectedQuote.annual}`;
+      document.getElementById("sMonth").textContent = `€${selectedQuote.month} / mese`;
+
+      document.getElementById("summarySection").style.display = "block";
+      document.getElementById("summarySection").scrollIntoView({ behavior: "smooth" });
+    }
+
+    function closeSummary() {
+      document.getElementById("summarySection").style.display = "none";
+    }
+
+    function openPayment() {
+      if (!selectedQuote) return;
+
+      document.getElementById("pCompany").textContent = selectedQuote.company;
+      document.getElementById("pPlate").textContent = selectedVehicle.plate;
+      document.getElementById("pAmount").textContent = `€${selectedQuote.annual}`;
+
+      document.getElementById("paymentSection").style.display = "block";
+      document.getElementById("paymentSection").scrollIntoView({ behavior: "smooth" });
+    }
+
+    function completePayment() {
+      const fullName = document.getElementById("fullName").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const card = document.getElementById("card").value.trim();
+      const expiry = document.getElementById("expiry").value.trim();
+
+      if (!fullName || !email || !card || !expiry) {
+        alert("Compila tutti i campi del pagamento.");
+        return;
+      }
+
+      document.getElementById("successBox").style.display = "block";
+      document.getElementById("successBox").scrollIntoView({ behavior: "smooth" });
+    }
+  </script>
 </body>
 </html>
