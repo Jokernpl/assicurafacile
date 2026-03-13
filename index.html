@@ -1,277 +1,150 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AssicuraFacile</title>
-  <style>
-    * {
-      box-sizing: border-box;
-      font-family: Arial, sans-serif;
-    }
+<meta charset="UTF-8">
+<title>AssicuraFacile</title>
 
-    body {
-      margin: 0;
-      background: #f3f3f3;
-      color: #222;
-    }
+<style>
 
-    .wrap {
-      max-width: 1100px;
-      margin: 40px auto;
-      padding: 20px;
-    }
+body{
+font-family:Arial;
+background:#f4f4f4;
+text-align:center;
+margin:0;
+padding:0;
+}
 
-    .hero {
-      background: #fff;
-      border-radius: 18px;
-      padding: 50px 25px;
-      text-align: center;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.08);
-    }
+.box{
+margin-top:100px;
+background:white;
+padding:40px;
+border-radius:15px;
+width:600px;
+margin-left:auto;
+margin-right:auto;
+box-shadow:0 10px 30px rgba(0,0,0,0.1);
+}
 
-    h1 {
-      margin: 0 0 12px;
-      font-size: 58px;
-      color: #31c86b;
-    }
+h1{
+color:#2ecc71;
+font-size:50px;
+}
 
-    .subtitle {
-      font-size: 18px;
-      color: #333;
-      margin-bottom: 30px;
-    }
+input{
+padding:15px;
+font-size:18px;
+width:250px;
+border-radius:10px;
+border:1px solid #ccc;
+}
 
-    .search-row {
-      display: flex;
-      justify-content: center;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
+button{
+padding:15px 25px;
+font-size:18px;
+border:none;
+border-radius:10px;
+background:#ff7a00;
+color:white;
+cursor:pointer;
+}
 
-    input {
-      width: 300px;
-      max-width: 100%;
-      padding: 16px;
-      font-size: 18px;
-      border: 1px solid #ccc;
-      border-radius: 12px;
-      outline: none;
-    }
+button:hover{
+opacity:0.9;
+}
 
-    button {
-      background: #ff8500;
-      color: white;
-      border: none;
-      padding: 16px 30px;
-      font-size: 18px;
-      border-radius: 12px;
-      cursor: pointer;
-      font-weight: bold;
-    }
+.results{
+display:none;
+margin-top:40px;
+}
 
-    button:hover {
-      opacity: 0.95;
-    }
+.card{
+background:white;
+padding:20px;
+margin:20px auto;
+width:500px;
+border-radius:12px;
+box-shadow:0 5px 20px rgba(0,0,0,0.1);
+}
 
-    .message {
-      margin-top: 18px;
-      font-size: 16px;
-      color: #d35400;
-      font-weight: bold;
-    }
+.price{
+font-size:30px;
+color:#ff7a00;
+font-weight:bold;
+}
 
-    .results {
-      display: none;
-      margin-top: 30px;
-    }
+.pay{
+background:#2ecc71;
+margin-top:10px;
+}
 
-    .card {
-      background: #fff;
-      border-radius: 16px;
-      padding: 22px;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.08);
-      margin-bottom: 20px;
-    }
-
-    .card h2 {
-      margin-top: 0;
-      font-size: 26px;
-    }
-
-    .vehicle-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 14px;
-      margin-top: 18px;
-    }
-
-    .vehicle-item {
-      background: #fafafa;
-      border: 1px solid #eee;
-      border-radius: 12px;
-      padding: 14px;
-    }
-
-    .vehicle-item strong {
-      display: block;
-      font-size: 13px;
-      color: #666;
-      margin-bottom: 6px;
-    }
-
-    .quotes {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 18px;
-      margin-top: 18px;
-    }
-
-    .quote {
-      background: #fff;
-      border-radius: 16px;
-      padding: 20px;
-      border-top: 5px solid #31c86b;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.08);
-    }
-
-    .quote h3 {
-      margin-top: 0;
-      margin-bottom: 10px;
-    }
-
-    .price {
-      font-size: 34px;
-      color: #ff8500;
-      font-weight: bold;
-      margin-bottom: 6px;
-    }
-
-    .month {
-      color: #666;
-      margin-bottom: 14px;
-    }
-
-    .quote ul {
-      padding-left: 18px;
-      margin-bottom: 18px;
-      color: #333;
-    }
-
-    .quote li {
-      margin-bottom: 8px;
-    }
-
-    .mini-btn {
-      width: 100%;
-    }
-
-    @media (max-width: 640px) {
-      h1 {
-        font-size: 42px;
-      }
-
-      .hero {
-        padding: 35px 18px;
-      }
-
-      input, button {
-        width: 100%;
-      }
-    }
-  </style>
+</style>
 </head>
+
 <body>
-  <div class="wrap">
-    <div class="hero">
-      <h1>AssicuraFacile</h1>
-      <div class="subtitle">Controlla la targa e confronta assicurazioni in pochi secondi.</div>
 
-      <div class="search-row">
-        <input id="plateInput" type="text" placeholder="Es. AB123CD" />
-        <button onclick="searchPlate()">Confronta</button>
-      </div>
+<div class="box">
 
-      <div id="message" class="message"></div>
-    </div>
+<h1>AssicuraFacile</h1>
 
-    <div id="results" class="results">
-      <div class="card">
-        <h2>Dati del veicolo</h2>
-        <div class="vehicle-grid">
-          <div class="vehicle-item"><strong>Targa</strong><span id="plateOut">-</span></div>
-          <div class="vehicle-item"><strong>Marca</strong><span>Fiat</span></div>
-          <div class="vehicle-item"><strong>Modello</strong><span>Panda</span></div>
-          <div class="vehicle-item"><strong>Anno</strong><span>2021</span></div>
-          <div class="vehicle-item"><strong>Alimentazione</strong><span>Benzina</span></div>
-          <div class="vehicle-item"><strong>Classe ambientale</strong><span>Euro 6</span></div>
-        </div>
-      </div>
+<p>Controlla la targa e confronta assicurazioni</p>
 
-      <div class="card">
-        <h2>Confronto assicurazioni</h2>
-        <div class="quotes">
-          <div class="quote">
-            <h3>Prima Assicurazioni</h3>
-            <div class="price">€389</div>
-            <div class="month">da €32,41 / mese</div>
-            <ul>
-              <li>RCA inclusa</li>
-              <li>Assistenza stradale</li>
-              <li>Tutela legale</li>
-            </ul>
-            <button class="mini-btn">Vedi preventivo</button>
-          </div>
+<input id="plate" placeholder="Inserisci targa">
+<button onclick="search()">Confronta</button>
 
-          <div class="quote">
-            <h3>ConTe.it</h3>
-            <div class="price">€442</div>
-            <div class="month">da €36,83 / mese</div>
-            <ul>
-              <li>RCA inclusa</li>
-              <li>Furto e incendio</li>
-              <li>Cristalli</li>
-            </ul>
-            <button class="mini-btn">Vedi preventivo</button>
-          </div>
+<div id="vehicle"></div>
 
-          <div class="quote">
-            <h3>Genertel</h3>
-            <div class="price">€498</div>
-            <div class="month">da €41,50 / mese</div>
-            <ul>
-              <li>RCA inclusa</li>
-              <li>Eventi naturali</li>
-              <li>Auto sostitutiva</li>
-            </ul>
-            <button class="mini-btn">Vedi preventivo</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+</div>
 
-  <script>
-    function searchPlate() {
-      const input = document.getElementById("plateInput");
-      const message = document.getElementById("message");
-      const results = document.getElementById("results");
-      const plateOut = document.getElementById("plateOut");
+<div id="results" class="results">
 
-      let plate = input.value.trim().toUpperCase();
+<div class="card">
+<h2>Prima Assicurazioni</h2>
+<div class="price">€389</div>
+<p>RCA + assistenza stradale</p>
+<button class="pay" onclick="pay()">Paga ora</button>
+</div>
 
-      if (!plate) {
-        message.textContent = "Inserisci una targa per continuare.";
-        results.style.display = "none";
-        return;
-      }
+<div class="card">
+<h2>Genertel</h2>
+<div class="price">€420</div>
+<p>RCA + furto incendio</p>
+<button class="pay" onclick="pay()">Paga ora</button>
+</div>
 
-      message.textContent = "Ricerca completata con successo.";
-      plateOut.textContent = plate;
-      results.style.display = "block";
+<div class="card">
+<h2>ConTe.it</h2>
+<div class="price">€460</div>
+<p>RCA completa</p>
+<button class="pay" onclick="pay()">Paga ora</button>
+</div>
 
-      results.scrollIntoView({ behavior: "smooth" });
-    }
-  </script>
+</div>
+
+<script>
+
+function search(){
+
+let plate=document.getElementById("plate").value;
+
+if(plate==""){
+alert("Inserisci la targa");
+return;
+}
+
+document.getElementById("vehicle").innerHTML=
+"<h3>Veicolo trovato</h3> Fiat Panda 2021<br>Targa: "+plate.toUpperCase();
+
+document.getElementById("results").style.display="block";
+
+}
+
+function pay(){
+
+window.location.href="https://buy.stripe.com/test";
+
+}
+
+</script>
+
 </body>
 </html>
